@@ -1,0 +1,8 @@
+<%
+  def current_user
+    return unless env['rack.session']
+    return unless id = env['rack.session']['current_user_id']
+    env['current_user'] ||= Model::User.find(id)
+  end
+%>
+<%= Yajl::Encoder.encode(current_user ? current_user.json_config : {}) %>
